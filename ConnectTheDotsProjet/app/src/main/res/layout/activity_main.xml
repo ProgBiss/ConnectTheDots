@@ -7,32 +7,20 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/le_ptit_pug"
     tools:context="com.example.etienne.connectthedots.MainActivity">
 
     <Button
         android:layout_width="200dp"
-        android:layout_height="60dp"
         android:text="PLAY"
         android:id="@+id/buttonPlay"
         android:layout_marginTop="122dp"
         android:backgroundTint="@color/buttonGreen"
         android:textColor="@android:color/black"
+        android:textSize="35dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="buttonOnClick" />
-
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="QUIT"
-        android:id="@+id/buttonQuit"
-        android:layout_below="@+id/buttonPlay"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/buttonRed"
-        android:textColor="@android:color/black"
-        android:onClick="exitAppOnClick (MainActivity)" />
+        android:onClick="buttonOnClick"
+        android:layout_height="80dp" />
 
     <TextView
         android:text="ConnectTheDots"
@@ -45,5 +33,18 @@
         android:fontFamily="sans-serif"
         android:textStyle="normal|bold"
         android:textSize="36sp"
-        android:textColor="@android:color/holo_orange_dark" />
+        android:textColor="@android:color/black" />
+
+    <Button
+        android:layout_width="200dp"
+        android:text="QUIT"
+        android:id="@+id/buttonQuit"
+        android:layout_marginTop="26dp"
+        android:backgroundTint="@color/buttonRed"
+        android:textColor="@android:color/black"
+        android:textSize="35dp"
+        android:onClick="exitAppOnClick (MainActivity)"
+        android:layout_height="80dp"
+        android:layout_below="@+id/buttonPlay"
+        android:layout_alignStart="@+id/buttonPlay" />
 </RelativeLayout>
