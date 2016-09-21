@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/le_ptit_pug"
+    tools:context="com.example.etienne.connectthedots.MainActivity">
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="PLAY"
+        android:id="@+id/buttonPlay"
+        android:layout_marginTop="122dp"
+        android:backgroundTint="@color/buttonGreen"
+        android:textColor="@android:color/black"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="buttonOnClick" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="QUIT"
+        android:id="@+id/buttonQuit"
+        android:layout_below="@+id/buttonPlay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/buttonRed"
+        android:textColor="@android:color/black"
+        android:onClick="exitAppOnClick (MainActivity)" />
+
+    <TextView
+        android:text="ConnectTheDots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp"
+        android:id="@+id/textView"
+        android:fontFamily="sans-serif"
+        android:textStyle="normal|bold"
+        android:textSize="36sp"
+        android:textColor="@android:color/holo_orange_dark" />
+</RelativeLayout>
