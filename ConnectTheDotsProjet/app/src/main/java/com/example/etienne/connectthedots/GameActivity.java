@@ -18,7 +18,7 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     Random r = new Random();
-    int points = 0;
+    //int points = 0;
     public ImageView imgCircle;
 
     @Override
@@ -27,7 +27,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         this.imgCircle= (ImageView)this.findViewById(R.id.imgCircle);
-        Thread timer = new Thread() {
+        /* Thread timer = new Thread() {
             @Override
             public void run() {
                 try {
@@ -35,7 +35,7 @@ public class GameActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            createCircle(r.nextInt(700), r.nextInt(700));
+                            createCircle(r.nextInt(650), r.nextInt(650));
                         }
                     });
                 } catch (InterruptedException e) {
@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity {
             }
         };
 
-        timer.start();
+        timer.start(); */
 
         this.imgCircle.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -58,7 +58,7 @@ public class GameActivity extends AppCompatActivity {
                         initialY = event.getY();
 
                         imgCircle.setBackgroundColor(Color.RED);
-                        //createCircle(r.nextInt(700), r.nextInt(700), olor.BCLUE);
+                        createCircle(r.nextInt(650), r.nextInt(650)); //Fait apparaitre des cercles quand on en touche 1
                         break;
 
                     case MotionEvent.ACTION_MOVE:
@@ -99,12 +99,12 @@ public class GameActivity extends AppCompatActivity {
                 return true;
             }
         });
-        createCircle(r.nextInt(700), r.nextInt(700));
+        createCircle(r.nextInt(650), r.nextInt(650));
     }
 
     public void createCircle(int posX, int posY) {
 
-        int randomColor = Color.rgb(r.nextInt(256), r.nextInt(256), r.nextInt(256));
+        int randomColor = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
 
         imgCircle = (ImageView)findViewById(R.id.imgCircle);
         Paint paint = new Paint();
@@ -124,9 +124,8 @@ public class GameActivity extends AppCompatActivity {
     private String TAG = GameActivity.class.getSimpleName();
     float initialX, initialY;
 
-
-        //createCircle(r.nextInt(500), r.nextInt(500), randomColor);
-        //points = points + 1;
-        //nbPtsLabel.setText(String.valueOf(points));
-        //TextView nbPtsLabel = (TextView)findViewById(R.id.nbPts);
+    //createCircle(r.nextInt(500), r.nextInt(500));
+    //points = points + 1;
+    //nbPtsLabel.setText(String.valueOf(points));
+    //TextView nbPtsLabel = (TextView)findViewById(R.id.nbPts);
 }
