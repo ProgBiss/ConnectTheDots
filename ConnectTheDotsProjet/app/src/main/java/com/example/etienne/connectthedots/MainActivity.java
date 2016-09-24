@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void exitAppOnClick(View view) {
         finish();
-        System.exit(1);
+        System.exit(0);
     }
 
     public void buttonOnClick(View view) {

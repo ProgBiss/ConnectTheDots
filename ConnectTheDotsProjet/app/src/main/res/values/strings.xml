@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ConnectTheDots</string>
+    <string name="play_button">PLAY</string>
+    <string name="quit_button">QUIT</string>
 </resources>

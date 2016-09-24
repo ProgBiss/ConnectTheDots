@@ -35,7 +35,7 @@ public class GameActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            createCircle(r.nextInt(700), r.nextInt(700), Color.YELLOW);
+                            createCircle(r.nextInt(700), r.nextInt(700));
                         }
                     });
                 } catch (InterruptedException e) {
@@ -58,7 +58,7 @@ public class GameActivity extends AppCompatActivity {
                         initialY = event.getY();
 
                         imgCircle.setBackgroundColor(Color.RED);
-                        //createCircle(r.nextInt(700), r.nextInt(700), Color.BLUE);
+                        //createCircle(r.nextInt(700), r.nextInt(700), olor.BCLUE);
                         break;
 
                     case MotionEvent.ACTION_MOVE:
@@ -99,14 +99,16 @@ public class GameActivity extends AppCompatActivity {
                 return true;
             }
         });
-        createCircle(200, 200, Color.GREEN);
+        createCircle(r.nextInt(700), r.nextInt(700));
     }
 
-    public void createCircle(int posX, int posY, int backColor){
+    public void createCircle(int posX, int posY) {
+
+        int randomColor = Color.rgb(r.nextInt(256), r.nextInt(256), r.nextInt(256));
 
         imgCircle = (ImageView)findViewById(R.id.imgCircle);
         Paint paint = new Paint();
-        paint.setColor(backColor);
+        paint.setColor(randomColor);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         Bitmap bmp = Bitmap.createBitmap(125, 125, Bitmap.Config.ARGB_8888);
@@ -122,7 +124,7 @@ public class GameActivity extends AppCompatActivity {
     private String TAG = GameActivity.class.getSimpleName();
     float initialX, initialY;
 
-    //int randomColor = Color.rgb(r.nextInt(256), r.nextInt(256), r.nextInt(256));
+
         //createCircle(r.nextInt(500), r.nextInt(500), randomColor);
         //points = points + 1;
         //nbPtsLabel.setText(String.valueOf(points));

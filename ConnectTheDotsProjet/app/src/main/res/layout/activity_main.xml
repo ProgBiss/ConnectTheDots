@@ -11,19 +11,19 @@
 
     <Button
         android:layout_width="200dp"
-        android:text="PLAY"
+        android:text="@string/play_button"
         android:id="@+id/buttonPlay"
         android:layout_marginTop="122dp"
         android:backgroundTint="@color/buttonGreen"
         android:textColor="@android:color/black"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="buttonOnClick"
         android:layout_height="80dp" />
 
     <TextView
-        android:text="ConnectTheDots"
+        android:text="@string/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -37,14 +37,15 @@
 
     <Button
         android:layout_width="200dp"
-        android:text="QUIT"
+        android:text="@string/quit_button"
         android:id="@+id/buttonQuit"
         android:layout_marginTop="26dp"
         android:backgroundTint="@color/buttonRed"
         android:textColor="@android:color/black"
-        android:textSize="35dp"
-        android:onClick="exitAppOnClick (MainActivity)"
+        android:textSize="35sp"
+        android:onClick="exitAppOnClick"
         android:layout_height="80dp"
         android:layout_below="@+id/buttonPlay"
-        android:layout_alignStart="@+id/buttonPlay" />
+        android:layout_alignStart="@+id/buttonPlay"
+        android:elevation="0dp" />
 </RelativeLayout>
