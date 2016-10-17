@@ -27,12 +27,15 @@ import java.util.Random;
 public class GameActivity extends Activity {
 
     Random r = new Random();
-    //int points = 0;
+    private int points = -1;
     boolean isRunning = false;
     int nbCircles;
     private static RelativeLayout relLayout;
-    private List<ImageView> imageViewList;
-    private ArrayList<Integer> dimensions;
+    private List<ImageView> imageViewList = new ArrayList<>();
+    private ArrayList<Integer> dimensions = new ArrayList<>();
+    private List<List<Integer>> circlePos = new ArrayList<>();
+    private float circleStartX, circleStartY;
+    private boolean ggezwin;
     private CanvasView canvasView;
 
     @Override
@@ -45,72 +48,82 @@ public class GameActivity extends Activity {
         getDisplayDims();
         this.relLayout = createLayout();
         canvasView.createCanvas(relLayout, dimensions);
-        canvasView.setOnTouchListenerOnCircles();
+        this.resetCanvas();
 
-        //thread.start();
+    }
 
-        /*final String TAG = GameActivity.class.getSimpleName();
-        final float[] initialX = new float[1];
-        final float[] initialY = new float[1];
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getRawX();
+        float y = event.getRawY();
 
-        //Pour chaque image view de la liste créée auparavant, faire ça. (Code à modifier un peu)(remplacer imgCircle par
-        //un point de la liste? (foreach)
-        for (final ImageView circle : imageViewList) {
-            circle.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
-                    int action = event.getActionMasked();
-                    initialX[0] = event.getX();
-                    initialY[0] = event.getY();
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                this.canvasView.startTouch(x, y);
+                Log.d("Pos X: ", String.valueOf(x));
+                Log.d("Pos Y: ", String.valueOf(y));
+                checkCircles(x, y);
+                this.canvasView.invalidate();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                checkCircles(x, y);
+                this.canvasView.moveTouch(x, y);
+                this.canvasView.invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
+                this.canvasView.upTouch();
+                this.canvasView.clearCanvas();
+                if (this.ggezwin)
+                    this.resetCanvas();
+                else
+                    this.resetTouched();
+                this.canvasView.invalidate();
+                break;
+            case MotionEvent.ACTION_HOVER_MOVE:
+                Log.d("IS_ON_POINT: ", "YES");
+        }
 
-                    switch (action) {
-                        case MotionEvent.ACTION_DOWN:
-                            circle.setBackgroundColor(Color.GREEN);
-                            canvasView.startTouch(initialX[0],initialY[0]);
-                            break;
+        return true;
+    }
 
-                        case MotionEvent.ACTION_MOVE:
-                            canvasView.moveTouch(initialX[0],initialY[0]);
-                            Log.d(TAG, "mouvement effectué!");
-                            break;
+    private void resetCanvas() {
+        this.points = this.points + 1;
+        this.ggezwin = false;
+        this.circlePos.clear();
+        this.circleStartX = 0;
+        this.circleStartY = 0;
 
-                        case MotionEvent.ACTION_UP:
-                            float finalX = event.getX();
-                            float finalY = event.getY();
+        for (ImageView circle : this.imageViewList) {
+            relLayout.removeView(circle);
+        }
 
-                            canvasView.clearCanvas();
-                            circle.setBackgroundColor(Color.TRANSPARENT);
+        for (int i = 0; i < 2; i++) {
+            this.createCircle();
+        }
+    }
 
-                            if (initialX[0] < finalX) {
-                                Log.d(TAG, "Left to Right swipe performed");
-                            }
+    private void resetTouched() {
+        for (ImageView circle : this.imageViewList) {
+            circle.setBackgroundColor(Color.TRANSPARENT);
+        }
+        this.circleStartX = 0;
+        this.circleStartY = 0;
+    }
 
-                            if (initialX[0] > finalX) {
-                                Log.d(TAG, "Right to Left swipe performed");
-                            }
-
-                            if (initialY[0] < finalY) {
-                                Log.d(TAG, "Up to Down swipe performed");
-                            }
-
-                            if (initialY[0] > finalY) {
-                                Log.d(TAG, "Down to Up swipe performed");
-                            }
-
-                            break;
-
-                        case MotionEvent.ACTION_CANCEL:
-                            Log.d(TAG,"Action was CANCEL");
-                            break;
-
-                        case MotionEvent.ACTION_OUTSIDE:
-                            Log.d(TAG, "Movement occurred outside bounds of current screen element");
-                            break;
-                    }
-                    return true;
+    private void checkCircles(float x, float y) {
+        for (ImageView circle : this.imageViewList) {
+            double dist = Math.sqrt(Math.pow(circle.getX() + 62.5d - x, 2.0d) + Math.pow(circle.getY() + 62.5d - y, 2.0d));
+            if (dist < 62.5d) {
+                if (this.circleStartX == 0 && this.circleStartY == 0) {
+                    this.circleStartX = circle.getX();
+                    this.circleStartY = circle.getY();
+                    circle.setBackgroundColor(Color.GREEN);
+                } else if (circle.getX() != this.circleStartX && circle.getY() != this.circleStartY) {
+                    circle.setBackgroundColor(Color.GREEN);
+                    this.ggezwin = true;
                 }
-            });
-        }*/
+            }
+        }
     }
 
     public void getDisplayDims() {
@@ -121,6 +134,54 @@ public class GameActivity extends Activity {
         int height = size.y;
         dimensions.add(width);
         dimensions.add(height);
+    }
+
+    /**
+     * Displays the ImageView according to the X and Y positions given in arguments.
+     **/
+    private void displayCircle(int posX, int posY, ImageView imgView) {
+        imgView.setX(posX);
+        imgView.setY(posY);
+    }
+
+    /**
+     * Creates an ImageView adding his Bitmap and a Canvas for it and adds it to the relative layout
+     * passed in the argument.
+     * **/
+    private void createCircle(){
+
+        ImageView imgView = new ImageView(this);
+
+        int randomColor = Color.rgb(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+
+        List<Integer> circleXY = new ArrayList<>();
+
+        int circleX = r.nextInt(dimensions.get(0)-130);
+        circleXY.add(circleX);
+        int circleY = r.nextInt(dimensions.get(1)-230);
+        circleXY.add(circleY);
+        circlePos.add(circleXY);
+        Log.d("circleXY: ", String.valueOf(circleXY));
+
+        Log.d("circlePos: ", String.valueOf(circlePos));
+
+        Paint paint = new Paint();
+        paint.setColor(randomColor);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        Bitmap bmp = Bitmap.createBitmap(125, 125, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+        canvas.drawCircle(bmp.getWidth()/2, bmp.getHeight()/2, 60, paint);
+
+        Drawable drawable = new BitmapDrawable(getResources(), bmp);
+
+        imgView.setImageDrawable(drawable);
+
+        relLayout.addView(imgView);
+
+        this.imageViewList.add(imgView);
+
+        displayCircle(circleX, circleY, imgView);
     }
 
     /**
